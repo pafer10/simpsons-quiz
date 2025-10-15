@@ -1,36 +1,182 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+"# Quiz de Los Simpson" 
+Aplicación tipo quiz: se muestra una cita y el jugador debe adivinar qué personaje la dijo. Construida con Next.js (App Router), React y Tailwind CSS, consumiendo la API pública de The Simpsons a través de un backend ligero en Next (route handler) que normaliza y cachea datos.
 
-## Getting Started
+Objetivo de aprendizaje: practicar Full-stack con Next (SSR/ISR, route handlers), estado en React, UI responsive con Tailwind, y despliegue en Vercel.
 
-First, run the development server:
+🚀 MVP (alcance inicial, sin BD)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Modo Clásico: 10 preguntas por partida.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Ronda: 1 cita real + 4 opciones (1 correcta, 3 distractores).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Estados: cargando, correcto/incorrecto, fin de partida.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Puntuación básica y mejor racha persistida en localStorage.
 
-## Learn More
+UI responsive con modo claro/oscuro.
 
-To learn more about Next.js, take a look at the following resources:
+🌱 Extras (siguientes iteraciones)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Racha infinita (termina al primer fallo).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Contrarreloj (X segundos por pregunta).
 
-## Deploy on Vercel
+Pack por personaje (filtrar por personaje).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Reto diario (semilla por fecha ⇒ el mismo para todos).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Compartir resultado (OpenGraph/SEO).
+
+Ranking global (añadir BD) — post-MVP.
+
+🧩 Tecnologías
+
+Next.js (App Router, Server/Client Components, Route Handlers).
+
+React (estado y UI).
+
+Tailwind CSS (diseño, dark mode, responsive).
+
+TypeScript.
+
+TheSimpsonsAPI (vía proxy /api/ronda-cita).
+
+🗂️ Estructura de carpetas (inicial)
+app/
+  (juego)/
+    inicio/page.tsx
+    pregunta/page.tsx
+  api/
+    ronda-cita/route.ts
+components/
+  BotonRespuesta.tsx
+  TarjetaCita.tsx
+  Encabezado.tsx
+lib/
+  cliente-api.ts
+  tipos.ts
+styles/
+  globals.css
+
+
+Nota: Nombres y rutas en castellano para coherencia (componentes, páginas y endpoints).
+
+🔌 Contrato del endpoint interno
+
+GET /api/ronda-cita
+
+Respuesta 200
+
+{
+  "cita": {
+    "texto": "I, for one, welcome our new insect overlords.",
+    "personaje": "Kent Brockman",
+    "imagen": "https://.../kent.png"
+  },
+  "opciones": ["Homer Simpson", "Marge Simpson", "Kent Brockman", "Lisa Simpson"],
+  "correcta": "Kent Brockman",
+  "semilla": "2025-10-15T00:00:00Z"
+}
+
+
+Errores
+
+502 cuando la API externa falla.
+
+504 si expira el tiempo de respuesta.
+
+503 si superamos rate limit (sugerir reintento).
+
+Cache
+
+Revalidación simple (p. ej., revalidate = 60) para aliviar llamadas a la API.
+
+🏁 Hitos y criterios de “hecho”
+
+Hito 0 — Setup ✅
+
+Next + Tailwind funcionando, README creado, primer commit.
+
+Hito 1 — Backend ligero
+
+/api/ronda-cita genera una ronda válida (1 cita + 4 opciones).
+
+Manejo de errores y revalidación básica.
+
+Hito 2 — Bucle de juego mínimo
+
+Pantallas: Inicio → Pregunta → Resultado.
+
+Estados de cargando, correcto/incorrecto, fin de partida (10/10).
+
+Hito 3 — Puntuación y persistencia
+
+Racha, aciertos, precisión.
+
+localStorage para mejor racha y ajustes básicos.
+
+Hito 4 — Modos
+
+Clásico / Racha / Reto diario (semilla por fecha).
+
+Hito 5 — Pulido & Deploy
+
+UI con Tailwind (accesible, responsive, dark mode).
+
+SEO + OpenGraph.
+
+Despliegue en Vercel.
+
+README “portfolio-ready” (capturas y enlaces).
+
+🧪 Calidad
+
+Estados vacíos y de error bien visibles.
+
+Accesibilidad: foco, roles aria, contraste.
+
+(Opcional) Tests e2e con Playwright:
+
+flujo de una partida clásica,
+
+reto diario reproducible.
+
+🖥️ Scripts (pnpm)
+pnpm dev       # entorno local
+pnpm build     # build de producción
+pnpm start     # servir build
+pnpm lint      # linting
+
+▶️ Desarrollo local
+
+Clonar el repo y entrar a la carpeta.
+
+Instalar dependencias: pnpm i
+
+Arrancar: pnpm dev y abrir http://localhost:3000
+
+☁️ Despliegue (Vercel)
+
+Importar el repo en Vercel → configurar framework Next.js.
+
+Variables: no requeridas en el MVP.
+
+Habilitar “Automatically expose System Environment Variables” (por defecto).
+
+Deploy y probar rutas /inicio, /pregunta y /api/ronda-cita.
+
+🖼️ Capturas (añadir cuando estén)
+
+docs/capturas/inicio.png
+
+docs/capturas/pregunta.png
+
+docs/capturas/resultado.png
+
+📄 Licencia
+
+MIT — usa y adapta libremente, citando autoría si reproduces el proyecto.
+
+👩‍💻 Autoría
+
+Proyecto didáctico desarrollado paso a paso para portfolio.
