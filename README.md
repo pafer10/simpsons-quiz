@@ -1,47 +1,51 @@
-"# Quiz de Los Simpson" 
-Aplicación tipo quiz: se muestra una cita y el jugador debe adivinar qué personaje la dijo. Construida con Next.js (App Router), React y Tailwind CSS, consumiendo la API pública de The Simpsons a través de un backend ligero en Next (route handler) que normaliza y cachea datos.
+# 🧠 Quiz de Citas — The Simpsons Edition
 
-Objetivo de aprendizaje: practicar Full-stack con Next (SSR/ISR, route handlers), estado en React, UI responsive con Tailwind, y despliegue en Vercel.
+Aplicación tipo **quiz**: se muestra una cita y el jugador debe adivinar qué personaje la dijo. Construida con **Next.js (App Router)**, **React** y **Tailwind CSS**, consumiendo la API pública de *The Simpsons* a través de un backend ligero en Next (route handler) que normaliza y cachea datos.
 
-🚀 MVP (alcance inicial, sin BD)
+---
 
-Modo Clásico: 10 preguntas por partida.
+## 🎯 Objetivo de aprendizaje
 
-Ronda: 1 cita real + 4 opciones (1 correcta, 3 distractores).
+Practicar **Full‑stack con Next.js** (SSR/ISR, route handlers), **estado en React**, **UI responsive con Tailwind** y **despliegue en Vercel**.
 
-Estados: cargando, correcto/incorrecto, fin de partida.
+---
 
-Puntuación básica y mejor racha persistida en localStorage.
+## 🚀 MVP (alcance inicial, sin BD)
 
-UI responsive con modo claro/oscuro.
+**Modo Clásico**
 
-🌱 Extras (siguientes iteraciones)
+* 10 preguntas por partida.
+* Cada ronda: **1 cita real + 4 opciones** (1 correcta, 3 distractores).
+* Estados: **cargando**, **correcto/incorrecto**, **fin de partida**.
+* Puntuación básica y **mejor racha** persistida en `localStorage`.
+* **UI responsive** con **modo claro/oscuro**.
 
-Racha infinita (termina al primer fallo).
+---
 
-Contrarreloj (X segundos por pregunta).
+## 🌱 Extras (siguientes iteraciones)
 
-Pack por personaje (filtrar por personaje).
+* ♾️ **Racha infinita** (termina al primer fallo).
+* ⏱️ **Contrarreloj** (X segundos por pregunta).
+* 👤 **Pack por personaje** (filtrar por personaje).
+* 📅 **Reto diario** (semilla por fecha ⇒ el mismo para todos).
+* 📤 **Compartir resultado** (OpenGraph/SEO).
+* 🏆 **Ranking global** (añadir BD) — post‑MVP.
 
-Reto diario (semilla por fecha ⇒ el mismo para todos).
+---
 
-Compartir resultado (OpenGraph/SEO).
+## 🧩 Tecnologías
 
-Ranking global (añadir BD) — post-MVP.
+* **Next.js** — App Router, Server/Client Components, Route Handlers.
+* **React** — Estado y UI.
+* **Tailwind CSS** — Diseño, dark mode, responsive.
+* **TypeScript**.
+* **TheSimpsonsAPI** — vía proxy `/api/ronda-cita`.
 
-🧩 Tecnologías
+---
 
-Next.js (App Router, Server/Client Components, Route Handlers).
+## 🗂️ Estructura de carpetas (inicial)
 
-React (estado y UI).
-
-Tailwind CSS (diseño, dark mode, responsive).
-
-TypeScript.
-
-TheSimpsonsAPI (vía proxy /api/ronda-cita).
-
-🗂️ Estructura de carpetas (inicial)
+```
 app/
   (juego)/
     inicio/page.tsx
@@ -57,16 +61,19 @@ lib/
   tipos.ts
 styles/
   globals.css
+```
 
+> **Nota:** Nombres y rutas en castellano para coherencia (componentes, páginas y endpoints).
 
-Nota: Nombres y rutas en castellano para coherencia (componentes, páginas y endpoints).
+---
 
-🔌 Contrato del endpoint interno
+## 🔌 Contrato del endpoint interno
 
-GET /api/ronda-cita
+### `GET /api/ronda-cita`
 
-Respuesta 200
+#### ✅ Respuesta 200
 
+```json
 {
   "cita": {
     "texto": "I, for one, welcome our new insect overlords.",
@@ -77,106 +84,106 @@ Respuesta 200
   "correcta": "Kent Brockman",
   "semilla": "2025-10-15T00:00:00Z"
 }
+```
 
+#### ⚠️ Errores
 
-Errores
+* `502` — Falla la API externa.
+* `504` — Tiempo de respuesta excedido.
+* `503` — Rate limit superado (sugerir reintento).
 
-502 cuando la API externa falla.
+#### 🗃️ Cache
 
-504 si expira el tiempo de respuesta.
+* Revalidación simple (p. ej. `export const revalidate = 60`) para aliviar llamadas a la API.
 
-503 si superamos rate limit (sugerir reintento).
+---
 
-Cache
+## 🏁 Hitos y criterios de “hecho”
 
-Revalidación simple (p. ej., revalidate = 60) para aliviar llamadas a la API.
+### Hito 0 — Setup ✅
 
-🏁 Hitos y criterios de “hecho”
+* Next + Tailwind funcionando.
+* README creado.
+* Primer commit.
 
-Hito 0 — Setup ✅
+### Hito 1 — Backend ligero
 
-Next + Tailwind funcionando, README creado, primer commit.
+* `/api/ronda-cita` genera una ronda válida (1 cita + 4 opciones).
+* Manejo de errores y revalidación básica.
 
-Hito 1 — Backend ligero
+### Hito 2 — Bucle de juego mínimo
 
-/api/ronda-cita genera una ronda válida (1 cita + 4 opciones).
+* Pantallas: **Inicio → Pregunta → Resultado**.
+* Estados de **cargando**, **correcto/incorrecto**, **fin de partida (10/10)**.
 
-Manejo de errores y revalidación básica.
+### Hito 3 — Puntuación y persistencia
 
-Hito 2 — Bucle de juego mínimo
+* Racha, aciertos, precisión.
+* `localStorage` para mejor racha y ajustes básicos.
 
-Pantallas: Inicio → Pregunta → Resultado.
+### Hito 4 — Modos
 
-Estados de cargando, correcto/incorrecto, fin de partida (10/10).
+* Clásico / Racha / Reto diario (semilla por fecha).
 
-Hito 3 — Puntuación y persistencia
+### Hito 5 — Pulido & Deploy
 
-Racha, aciertos, precisión.
+* UI con Tailwind (accesible, responsive, dark mode).
+* SEO + OpenGraph.
+* Despliegue en Vercel.
+* README “portfolio‑ready” (capturas y enlaces).
 
-localStorage para mejor racha y ajustes básicos.
+---
 
-Hito 4 — Modos
+## 🧪 Calidad
 
-Clásico / Racha / Reto diario (semilla por fecha).
+* Estados vacíos y de error bien visibles.
+* Accesibilidad: foco, roles `aria`, contraste.
+* *(Opcional)* Tests **e2e** con **Playwright**: flujo de una partida clásica y reto diario reproducible.
 
-Hito 5 — Pulido & Deploy
+---
 
-UI con Tailwind (accesible, responsive, dark mode).
+## 🖥️ Scripts (pnpm)
 
-SEO + OpenGraph.
-
-Despliegue en Vercel.
-
-README “portfolio-ready” (capturas y enlaces).
-
-🧪 Calidad
-
-Estados vacíos y de error bien visibles.
-
-Accesibilidad: foco, roles aria, contraste.
-
-(Opcional) Tests e2e con Playwright:
-
-flujo de una partida clásica,
-
-reto diario reproducible.
-
-🖥️ Scripts (pnpm)
+```bash
 pnpm dev       # entorno local
 pnpm build     # build de producción
 pnpm start     # servir build
 pnpm lint      # linting
+```
 
-▶️ Desarrollo local
+---
 
-Clonar el repo y entrar a la carpeta.
+## ▶️ Desarrollo local
 
-Instalar dependencias: pnpm i
+1. Clonar el repo y entrar a la carpeta.
+2. Instalar dependencias: `pnpm i`.
+3. Arrancar: `pnpm dev` y abrir [http://localhost:3000](http://localhost:3000).
 
-Arrancar: pnpm dev y abrir http://localhost:3000
+---
 
-☁️ Despliegue (Vercel)
+## ☁️ Despliegue (Vercel)
 
-Importar el repo en Vercel → configurar framework Next.js.
+1. Importar el repo en **Vercel** → configurar framework **Next.js**.
+2. Variables: **no requeridas** en el MVP.
+3. Habilitar “Automatically expose System Environment Variables” (por defecto).
+4. Deploy y probar rutas **/inicio**, **/pregunta** y **/api/ronda-cita**.
 
-Variables: no requeridas en el MVP.
+---
 
-Habilitar “Automatically expose System Environment Variables” (por defecto).
+## 🖼️ Capturas (añadir cuando estén)
 
-Deploy y probar rutas /inicio, /pregunta y /api/ronda-cita.
+* `docs/capturas/inicio.png`
+* `docs/capturas/pregunta.png`
+* `docs/capturas/resultado.png`
 
-🖼️ Capturas (añadir cuando estén)
+---
 
-docs/capturas/inicio.png
+## 📄 Licencia
 
-docs/capturas/pregunta.png
+**MIT** — usa y adapta libremente, citando autoría si reproduces el proyecto.
 
-docs/capturas/resultado.png
+---
 
-📄 Licencia
-
-MIT — usa y adapta libremente, citando autoría si reproduces el proyecto.
-
-👩‍💻 Autoría
+## 👩‍💻 Autoría
 
 Proyecto didáctico desarrollado paso a paso para portfolio.
