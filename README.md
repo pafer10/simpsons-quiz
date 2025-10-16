@@ -98,50 +98,6 @@ styles/
 
 ---
 
-## 🏁 Hitos y criterios de “hecho”
-
-### Hito 0 — Setup ✅
-
-* Next + Tailwind funcionando.
-* README creado.
-* Primer commit.
-
-### Hito 1 — Backend ligero
-
-* `/api/ronda-cita` genera una ronda válida (1 cita + 4 opciones).
-* Manejo de errores y revalidación básica.
-
-### Hito 2 — Bucle de juego mínimo
-
-* Pantallas: **Inicio → Pregunta → Resultado**.
-* Estados de **cargando**, **correcto/incorrecto**, **fin de partida (10/10)**.
-
-### Hito 3 — Puntuación y persistencia
-
-* Racha, aciertos, precisión.
-* `localStorage` para mejor racha y ajustes básicos.
-
-### Hito 4 — Modos
-
-* Clásico / Racha / Reto diario (semilla por fecha).
-
-### Hito 5 — Pulido & Deploy
-
-* UI con Tailwind (accesible, responsive, dark mode).
-* SEO + OpenGraph.
-* Despliegue en Vercel.
-* README “portfolio‑ready” (capturas y enlaces).
-
----
-
-## 🧪 Calidad
-
-* Estados vacíos y de error bien visibles.
-* Accesibilidad: foco, roles `aria`, contraste.
-* *(Opcional)* Tests **e2e** con **Playwright**: flujo de una partida clásica y reto diario reproducible.
-
----
-
 ## 🖥️ Scripts (pnpm)
 
 ```bash
@@ -161,29 +117,10 @@ pnpm lint      # linting
 
 ---
 
-## ☁️ Despliegue (Vercel)
-
-1. Importar el repo en **Vercel** → configurar framework **Next.js**.
-2. Variables: **no requeridas** en el MVP.
-3. Habilitar “Automatically expose System Environment Variables” (por defecto).
-4. Deploy y probar rutas **/inicio**, **/pregunta** y **/api/ronda-cita**.
-
----
-
-## 🖼️ Capturas (añadir cuando estén)
+## 🖼️ Capturas
 
 * `docs/capturas/inicio.png`
 * `docs/capturas/pregunta.png`
 * `docs/capturas/resultado.png`
 
 ---
-
-## 📄 Licencia
-
-**MIT** — usa y adapta libremente, citando autoría si reproduces el proyecto.
-
----
-
-## 👩‍💻 Autoría
-
-Proyecto didáctico desarrollado paso a paso para portfolio.
